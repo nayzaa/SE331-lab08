@@ -28,7 +28,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	compile group: 'commons-io', name: 'commons-io', version: '2.5'
 	compile "org.springframework.boot:spring-boot-configuration-processor"
-
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile("com.h2database:h2")
 
 }
 
