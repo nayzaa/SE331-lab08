@@ -1,15 +1,12 @@
 package camt.cbsd.lab05.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -18,17 +15,20 @@ import javax.persistence.Id;
 @JsonIgnoreProperties(ignoreUnknown = false)
 @Builder
 public class Student {
+    @ManyToMany
+    List<Course> enrolledCourse;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NonNull
     long id;
-    String studentId;
-    String name;
-    String surname;
-    double gpa;
-    String image;
-    boolean feature;
-    int penAmount;
-    String description;
+    @NonNull String studentId;
+    @NonNull String name;
+    @NonNull String surname;
+    @NonNull double gpa;
+    @NonNull String image;
+    @NonNull boolean feature;
+    @NonNull int penAmount;
+    @NonNull String description;
 
     public long getId() {
         return id;
@@ -42,4 +42,9 @@ public class Student {
         this.image = image;
     }
 
+    public List<Course> addCourse(Course course){
+        enrolledCourse = Optional.ofNullable(enrolledCourse).orElse(new ArrayList<>());
+        enrolledCourse.add(course);
+        return enrolledCourse;
+    }
 }
