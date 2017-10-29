@@ -2,6 +2,7 @@ package camt.cbsd.lab05.dao;
 
 import camt.cbsd.lab05.entity.Student;
 import camt.cbsd.lab05.repository.StudentRepository;
+
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -13,12 +14,6 @@ import java.util.List;
 @Profile("DBDataSource")
 public class StudentDaoDBImpl implements StudentDao {
     StudentRepository studentRepository;
-
-    @Autowired
-    public void setStudentRepository(StudentRepository studentRepository){
-        this.studentRepository = studentRepository;
-    }
-
     @Override
     public List<Student> getStudents() {
         return Lists.newArrayList(studentRepository.findAll());
@@ -26,7 +21,7 @@ public class StudentDaoDBImpl implements StudentDao {
 
     @Override
     public Student findById(long id) {
-        return null;
+        return studentRepository.findById(id);
     }
 
     @Override
@@ -34,8 +29,13 @@ public class StudentDaoDBImpl implements StudentDao {
         return studentRepository.save(student);
     }
 
+    @Autowired
+    public void setStudentRepository(StudentRepository studentRepository){
+        this.studentRepository = studentRepository;
+    }
     @Override
     public Integer size(){
         return (int)studentRepository.count();
     }
+
 }
