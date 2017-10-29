@@ -4,9 +4,13 @@ import camt.cbsd.lab05.entity.Student;
 import camt.cbsd.lab05.repository.StudentRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
+@Profile("DBDataSource")
 public class StudentDaoDBImpl implements StudentDao {
     StudentRepository studentRepository;
 
