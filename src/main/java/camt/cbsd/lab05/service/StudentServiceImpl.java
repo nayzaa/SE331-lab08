@@ -2,6 +2,7 @@ package camt.cbsd.lab05.service;
 
 import camt.cbsd.lab05.dao.StudentDao;
 import camt.cbsd.lab05.entity.Student;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +12,8 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Profile("inMemoryDB")
+//@Profile("firstDataSource")
+@Profile("DBDataSource")
 @ConfigurationProperties(prefix = "server")
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -40,7 +42,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(long id) {
-        return studentDao.findById(id);
+        Student student = studentDao.findById(id);
+        Hibernate.initialize(student.getEnrolledCourse());
+        return student;
+//        return studentDao.findById(id);
     }
 
     @Override
